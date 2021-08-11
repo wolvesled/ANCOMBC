@@ -18,7 +18,7 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
         print(meta_data)
         print(group)
         n_level = length(unique(meta_data[, group]))
-        print("debug B: I'm here")
+        print(paste("debug B n_level:", n_level))
         if (n_level < 2) {
             stop("The group variable should have >= 2 categories",
                  call. = FALSE)
@@ -30,6 +30,7 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
 
         # Check the sample size per group
         size_per_group = tapply(meta_data[, group], meta_data[, group], length)
+        print(paste("debug C size_per_group:", size_per_group))
         if (any(size_per_group < 2)) {
             stop_txt = sprintf(paste("Sample size per group should be >= 2",
                                      "Small sample size detected for the following group(s): ",
@@ -49,6 +50,7 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
     zero_prop = apply(feature_table, 1, function(x)
         sum(x == 0, na.rm = TRUE)/length(x[!is.na(x)]))
     tax_del = which(zero_prop >= zero_cut)
+    print(paste("debug D tax_del length:", length(tax_del)))
     if (length(tax_del) > 0) {
         feature_table = feature_table[- tax_del, ]
     }
@@ -60,9 +62,11 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
         feature_table = feature_table[, - subj_del, drop = FALSE]
         meta_data = meta_data[- subj_del, , drop = FALSE]
     }
+    print("debug E:")
+    print(paste("length of feature_table:", length(feature_table)))
+    print(meta_data)
     fiuo_prep = list(feature_table = feature_table,
                      meta_data = meta_data,
                      global = global)
     return(fiuo_prep)
 }
-
