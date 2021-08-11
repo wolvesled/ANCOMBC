@@ -1,7 +1,8 @@
 # Data pre-processing
 data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
-    print("debug exec data_prep...")
     feature_table = abundances(phyloseq)
+    print("debug exec data_prep...")
+    print(paste("initial feature_table size:", length(feature_table)))
     meta_data = meta(phyloseq)
     # Drop unused levels
     meta_data[] = lapply(meta_data, function(x)
@@ -30,7 +31,8 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
 
         # Check the sample size per group
         size_per_group = tapply(meta_data[, group], meta_data[, group], length)
-        print(paste("debug C size_per_group:", size_per_group))
+        print("debug C size_per_group:")
+        print(size_per_group)
         if (any(size_per_group < 2)) {
             stop_txt = sprintf(paste("Sample size per group should be >= 2",
                                      "Small sample size detected for the following group(s): ",
@@ -50,13 +52,15 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
     zero_prop = apply(feature_table, 1, function(x)
         sum(x == 0, na.rm = TRUE)/length(x[!is.na(x)]))
     tax_del = which(zero_prop >= zero_cut)
-    print(paste("debug D tax_del length:", length(tax_del)))
+    print(paste("debug D tax_del length / zero_cut:", length(tax_del), "/", zero_cut))
     if (length(tax_del) > 0) {
         feature_table = feature_table[- tax_del, ]
     }
+    print(paste("length of feature_table:", length(feature_table)))
 
     # Discard samples with library size < lib_cut
     lib_size = colSums(feature_table, na.rm = TRUE)
+    print(paste("lib_size / lib_cut:", lib_size, "/", lib_cut))
     if(any(lib_size < lib_cut)){
         subj_del = which(lib_size < lib_cut)
         feature_table = feature_table[, - subj_del, drop = FALSE]
