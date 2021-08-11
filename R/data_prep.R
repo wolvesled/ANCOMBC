@@ -15,8 +15,8 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
     } else {
         # Check the number of groups
         print("debug A:")
-        meta_data
-        group
+        print(meta_data)
+        print(group)
         n_level = length(unique(meta_data[, group]))
         print("debug B: I'm here")
         if (n_level < 2) {
