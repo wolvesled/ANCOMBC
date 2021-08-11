@@ -1,5 +1,6 @@
 # Data pre-processing
 data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
+    print("debug exec data_prep...")
     feature_table = abundances(phyloseq)
     meta_data = meta(phyloseq)
     # Drop unused levels
@@ -13,9 +14,11 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
         }
     } else {
         # Check the number of groups
-        print(paste("debug A metadata, group:", meta_data, group))
+        print("debug A:")
+        meta_data
+        group
         n_level = length(unique(meta_data[, group]))
-        print(paste("debug B: I'm here"))
+        print("debug B: I'm here")
         if (n_level < 2) {
             stop("The group variable should have >= 2 categories",
                  call. = FALSE)
