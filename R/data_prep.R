@@ -15,7 +15,7 @@ data_prep = function(phyloseq, group, zero_cut, lib_cut, global = global) {
         # Check the number of groups
         print(paste("debug A metadata, group:", meta_data, group))
         n_level = length(unique(meta_data[, group]))
-        print(paste("debug B: I'm here")
+        print(paste("debug B: I'm here"))
         if (n_level < 2) {
             stop("The group variable should have >= 2 categories",
                  call. = FALSE)
