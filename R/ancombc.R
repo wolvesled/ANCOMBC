@@ -174,10 +174,8 @@ ancombc = function(phyloseq, formula, p_adj_method = "holm", zero_cut = 0.90,
                    conserve = FALSE, alpha = 0.05, global = FALSE){
   # 1. Data pre-processing
   fiuo_prep = data_prep(phyloseq, group, zero_cut, lib_cut, global = global)
-  
   print("debug AA fiuo_prep:")
   as.data.frame(fiuo_prep) %>% top_n(5)
-  
   feature_table = fiuo_prep$feature_table
   meta_data = fiuo_prep$meta_data
   global = fiuo_prep$global
@@ -206,10 +204,8 @@ ancombc = function(phyloseq, formula, p_adj_method = "holm", zero_cut = 0.90,
 
   # 3. Estimation of parameters
   fiuo_para = para_est(y, meta_data, formula, tol, max_iter)
-  
   print("debug BB fiuo_para:")
   as.data.frame(fiuo_para) %>% top_n(5)
-  
   beta = fiuo_para$beta
   d = fiuo_para$d
   e = fiuo_para$e
@@ -224,10 +220,8 @@ ancombc = function(phyloseq, formula, p_adj_method = "holm", zero_cut = 0.90,
 
   # 5. Coefficients, standard error, and sampling fractions
   fiuo_fit = fit_summary(y, x, beta, var_hat, delta_em, var_delta, conserve)
-  
   print("debug CC fiuo_fit:")
   as.data.frame(fiuo_fit) %>% top_n(5)
-  
   beta_hat = fiuo_fit$beta_hat
   se_hat = fiuo_fit$se_hat
   d_hat = fiuo_fit$d_hat
