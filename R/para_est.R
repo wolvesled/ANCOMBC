@@ -5,6 +5,8 @@ para_est = function(y, meta_data, formula, tol, max_iter) {
     samp_id = colnames(y)
     n_samp = ncol(y)
     covariates = colnames(x)
+    print("debug AAA para_est: covariates")
+    print(covariates)
 
     # Sampling fractions
     d = rep(0, n_samp)
