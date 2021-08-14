@@ -167,6 +167,7 @@
 #' @importFrom Rdpack reprompt
 #'
 #' @export
+library(dplyr)
 ancombc = function(phyloseq, formula, p_adj_method = "holm", zero_cut = 0.90,
                    lib_cut = 0, group = NULL, struc_zero = FALSE,
                    neg_lb = FALSE, tol = 1e-05, max_iter = 100,
